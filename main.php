@@ -35,18 +35,54 @@ $GENDER_TAGS = array_combine($NAMES_KEYS, $GENDER_TAGS);
 function getGenderFromName($fullName)
 {
     $names = getPartsFromFullname($fullName);
-    $gender_value = 0;
+    $genderValue = 0;
 
     foreach ($names as $key => $name) {
         foreach ($GLOBALS['GENDER_TAGS'][$key]['female'] as $tag) {
             if (mb_substr($name, mb_strlen($name) - mb_strlen($tag), mb_strlen($tag)) === $tag)
-                $gender_value -= 1;
+                $genderValue -= 1;
         }
         foreach ($GLOBALS['GENDER_TAGS'][$key]['male'] as $tag) {
             if (mb_substr($name, mb_strlen($name) - mb_strlen($tag), mb_strlen($tag)) === $tag)
-                $gender_value += 1;
+                $genderValue += 1;
         }
     }
 
-    return $gender_value <=> 0;
+    return $genderValue <=> 0;
+}
+
+function getGenderDescription($personsArray)
+{
+    $womenCount = 0;
+    $menCount = 0;
+    $unknowsCount = 0;
+    $total = 0;
+
+    foreach ($personsArray as $person) {
+        switch (getGenderFromName($person['fullname'])) {
+            case -1:
+                $womenCount++;
+                break;
+
+            case 1:
+                $menCount++;
+                break;
+
+            default:
+                $unknowsCount++;
+                break;
+        }
+        $total++;
+    }
+
+    $number_format = "number_format";
+
+    return <<< RESULT
+<pre><span style="font-weight: bold">Гендерный состав аудитории:
+---------------------------</span>
+Мужчины - {$number_format($menCount / $total * 100, 1)}%
+Женщины - {$number_format($womenCount / $total * 100, 1)}%
+Не удалось определить - {$number_format($unknowsCount / $total * 100, 1)}%
+</pre>
+RESULT;
 }
