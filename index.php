@@ -12,9 +12,6 @@ echo "<p>{$method('Сухачев','Илья','Сергеевич')}</p>";
 $method = 'getShortName';
 echo "<p>{$method("Сухачев Илья Сергеевич")}</p>";
 
-$method = 'getGenderFromName';
-echo "<p>{$method("Сухачев Илья Сергеевич")}</p>";
-
 echo "<p>";
 foreach ($example_persons_array as $person)
 {
@@ -25,3 +22,6 @@ echo "</p>";
 
 $method = 'getGenderDescription';
 echo "<p>{$method($example_persons_array)}</p>";
+
+$method = 'getPerfectPartner';
+echo "<p>{$method("Сухачева", "Мария", "Сергеев", $example_persons_array)}</p>";

@@ -75,14 +75,43 @@ function getGenderDescription($personsArray)
         $total++;
     }
 
-    $number_format = "number_format";
+    $number_format = 'number_format';
 
     return <<< RESULT
-<pre><span style="font-weight: bold">Гендерный состав аудитории:
----------------------------</span>
-Мужчины - {$number_format($menCount / $total * 100, 1)}%
-Женщины - {$number_format($womenCount / $total * 100, 1)}%
-Не удалось определить - {$number_format($unknowsCount / $total * 100, 1)}%
-</pre>
-RESULT;
+    <pre><span style="font-weight: bold">Гендерный состав аудитории:
+    ---------------------------</span>
+    Мужчины - {$number_format($menCount /$total * 100, 1)}%
+    Женщины - {$number_format($womenCount /$total * 100, 1)}%
+    Не удалось определить - {$number_format($unknowsCount /$total * 100, 1)}%
+    </pre>
+    RESULT;
+}
+
+function getPerfectPartner($surname, $name, $patronomyc, $personsArray)
+{
+    $fullname = getFullnameFromParts(
+        mb_convert_case($surname, MB_CASE_TITLE),
+        mb_convert_case($name, MB_CASE_TITLE),
+        mb_convert_case($patronomyc, MB_CASE_TITLE)
+    );
+
+    $gender = getGenderFromName($fullname);
+
+    while (true)
+    {
+        $i = rand(0, count($personsArray) - 1);
+        $somePerson = $personsArray[$i];
+        $somePersonGender = getGenderFromName($somePerson['fullname']);
+        if (-$gender === $somePersonGender) break;
+    }
+
+    $method = 'getShortName';
+    $number_format = 'number_format';
+    $percentage = rand(5000, 10000) / 100;
+
+    return <<< RESULT
+    <pre>{$method($fullname)} + {$method($somePerson['fullname'])} = 
+    ♡ Идеально на {$number_format($percentage , 2)}% ♡
+    </pre>
+    RESULT;
 }
