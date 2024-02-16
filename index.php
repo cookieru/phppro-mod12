@@ -25,3 +25,4 @@ echo "<p>{$method($example_persons_array)}</p>";
 
 $method = 'getPerfectPartner';
 echo "<p>{$method("Сухачева", "Мария", "Сергеев", $example_persons_array)}</p>";
+echo "<p>{$method("сухачева", "МАРиЯ", "СеРгеЕвНА", $example_persons_array)}</p>";
