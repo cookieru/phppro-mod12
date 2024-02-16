@@ -15,3 +15,11 @@ function getFullnameFromParts($surname, $name, $patronomyc)
 
     return $result;
 }
+
+function getShortName($fullName) {
+    $names = getPartsFromFullname($fullName);
+    $result = $names['name'] . " ";
+    $result .= mb_substr($names['surname'], 0, 1) . ".";
+
+    return $result;
+}

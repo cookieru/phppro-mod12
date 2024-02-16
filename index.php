@@ -9,5 +9,7 @@ foreach (getPartsFromFullname("Сухачев Илья Сергеевич") as $
 $method = 'getFullnameFromParts';
 echo "<p>{$method('Сухачев','Илья','Сергеевич')}</p>";
 
+$method = 'getShortName';
+echo "<p>{$method("Сухачев Илья Сергеевич")}</p>";
 
 
