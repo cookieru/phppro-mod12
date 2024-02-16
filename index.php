@@ -13,3 +13,5 @@ $method = 'getShortName';
 echo "<p>{$method("Сухачев Илья Сергеевич")}</p>";
 
 
+$method = 'getGenderFromName';
+echo "<p>{$method("Сухачев Илья Сергеевич")}</p>";
